@@ -1,0 +1,226 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #11001e;
+}
+
+
+
+/* ============================================= NAVIGATION ======================================== */
+
+.header {
+  display: flex;
+  width: 100%;
+  max-width: 1274px;
+  padding: 0 20px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.logo {
+  width: 32px;
+}
+
+.logoText {
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--Media-Hub-colour-Text-text--50, #fffeff);
+  margin-top: 5px;
+}
+
+.navigation {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+
+.navLink {
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--Media-Hub-colour-Text-text--50, #fffeff);
+  text-decoration: none;
+}
+
+.navLink:hover,
+.navLink:focus {
+  color: var(--Media-Hub-colour-primary-primary-300, #b66dff);
+}
+
+.active {
+  color: var(--Media-Hub-colour-primary-primary-300, #b66dff);
+  font-weight: 700;
+}
+
+.userControls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(65, 51, 75, 1);
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.profileIcon {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.settingsIcon {
+  width: 50px;
+  aspect-ratio: 1;
+}
+
+/*=============================================== TOGGLE COMPONENT ============================================*/
+.contentSection {
+  justify-content: center;
+  align-items: center;
+  background-color: #41334b;
+  align-self: stretch;
+  display: flex;
+  margin-top: 21px;
+  width: 100%;
+  font-size: 12px;
+  color: var(--Grey-neutral, #f9f9f9);
+  font-weight: 500;
+  text-align: center;
+  line-height: 150%;
+  padding: 8px 60px;
+}
+
+.navContainer {
+  border: 1px solid rgba(96, 84, 104, 1);
+  border-radius: 4px;
+
+  background-color: #11001e;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navItem {
+  font-family: Garute, sans-serif;
+  margin: auto 0;
+  padding: 8px 16px;
+}
+
+.activeNavItem {
+  font-family: Garute, sans-serif;
+  justify-content: center;
+  border-radius: 4px;
+  background: linear-gradient(270deg, #e14eff 4.37%, #a85aff 100%);
+  padding: 8px 16px;
+}
+
+
+/*===================================================== RECOMMENDATION SECTION ==================================*/
+.recommendationsContainer {
+  border: 1px solid rgba(65, 51, 75, 1);
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 32px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-weight: 600;
+}
+
+.headerTitle {
+  color: var(--Media-Hub-colour-Text-text--50, #fffeff);
+  font: 32px/75% Inter, sans-serif;
+}
+
+.seeAllLink {
+  color: var(--Media-Hub-colour-Secondary-secondary-500, #ff604b);
+  font: 20px/120% Inter, sans-serif;
+}
+
+.recommendationsGrid {
+  margin-top: 24px;
+  display: flex;
+  gap: 20px;
+  overflow-x: scroll;
+}
+
+/*===================================================== RECOMMENDATION CARD ======================================*/
+
+.recommendationCard {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+  width: 25%;
+  border: 1px solid rgba(65, 51, 75, 1);
+}
+
+.recommendationImage {
+  aspect-ratio: 1;
+  width: 100%;
+  box-shadow: 3px 8px 16px 0px rgba(176, 88, 255, 0.05);
+}
+
+.recommendationContent {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  padding: 0 16px;
+}
+
+.recommendationTitle {
+  color: var(--Media-Hub-colour-Text-text--50, #fffeff);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  font-family: Inter, sans-serif;
+}
+
+.genreContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  gap: 20px;
+  font-size: 14px;
+  color: var(--Media-Hub-colour-Text-text--700, #b5aeb5);
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.genreLabel {
+  font-family: Inter, sans-serif;
+}
+
+.genreImage {
+  aspect-ratio: 3.03;
+  width: 51px;
+  margin: auto 0;
+}
