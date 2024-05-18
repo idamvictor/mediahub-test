@@ -1,0 +1,7 @@
+.logo {
+  aspect-ratio: 1;
+  object-fit: auto;
+  object-position: center;
+  width: 98px;
+  align-self: start;
+}

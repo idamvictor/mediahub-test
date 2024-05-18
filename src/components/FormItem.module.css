@@ -1,0 +1,33 @@
+/* ==========================Form Item ============================================================== */
+
+.formItem {
+  border-radius: 4px;
+  background-color: #605468;
+  display: flex;
+  margin-top: 28px;
+  width: 628px;
+  max-width: 100%;
+  gap: 12px;
+  font-size: 16px;
+  color: #928a98;
+  font-weight: 400;
+  line-height: 150%;
+  padding: 16px 20px;
+}
+
+.input {
+  flex-grow: 1;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+.icon {
+  aspect-ratio: 1;
+  object-fit: auto;
+  object-position: center;
+  width: 24px;
+}

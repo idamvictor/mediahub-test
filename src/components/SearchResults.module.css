@@ -1,0 +1,78 @@
+/* MyComponent.module.css */
+.header {
+  background-color: var(--Media-Hub-colour-Background-background-500, #11001e);
+  display: flex;
+  flex-direction: column;
+  padding: 40px 80px;
+}
+
+.headerContent {
+  display: flex;
+  width: 100%;
+  max-width: 1249px;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoContainer {
+  align-items: center;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 96, 75, 1);
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+}
+
+.logoImage {
+  aspect-ratio: 1;
+  object-fit: auto;
+  object-position: center;
+  width: 24px;
+}
+
+.pageTitle {
+  color: #fff;
+  font: 500 28px/158% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.resultsTitle {
+  color: #fff;
+  margin-top: 50px;
+  font: 500 24px/67% Inter, sans-serif;
+}
+
+.imageGallery {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  border-radius: 10px;
+  box-shadow: 3px 8px 16px rgba(176, 88, 255, 0.05);
+  border: 1px solid rgba(65, 51, 75, 1);
+  background-color: var(--Media-Hub-colour-Background-background-500, #11001e);
+  padding-bottom: 19px;
+  overflow: hidden;
+}
+
+.cardImage {
+  aspect-ratio: 1;
+  object-fit: auto;
+  object-position: center;
+  width: 100%;
+}
+
+.cardTitle {
+  font-family: Inter, sans-serif;
+  color: var(--Media-Hub-colour-Text-text--50, #fffeff);
+  white-space: nowrap;
+  margin: 16px 0 0 16px;
+}

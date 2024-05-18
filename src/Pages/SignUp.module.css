@@ -1,0 +1,54 @@
+.heading {
+  color: #fff;
+  margin-top: 24px;
+  font: 700 36px/122% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.subheading {
+  color: #b5aeb5;
+  text-align: center;
+  margin-top: 12px;
+  font: 500 16px/112.5% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.orText {
+  color: #fff;
+  text-align: center;
+  margin-top: 48px;
+  font: 500 16px/112.5% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.socialSection {
+  display: flex;
+  margin-top: 48px;
+  width: 628px;
+  max-width: 100%;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.socialIconContainer {
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid #605468;
+  display: flex;
+  padding: 20px;
+  flex-grow: 1;
+}
+.socialIcon {
+  aspect-ratio: 1;
+  object-fit: auto;
+  object-position: center;
+  width: 24px;
+}
+.signinText {
+  color: #b5aeb5;
+  text-align: center;
+  background-clip: text;
+  /* -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
+  background-color: linear-gradient(262deg, #c83cd4 -12.99%, #6736a6 98.21%);
+  margin-top: 41px;
+  font: 500 16px/18px Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}

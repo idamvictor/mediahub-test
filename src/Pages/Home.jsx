@@ -1,22 +1,86 @@
 import { NavLink, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./Home.module.css";
-import queenOfTears from "../assets/queenOfTears.png";
 import netflixLogo from "../assets/netflixLogo.png";
+import { useEffect, useState } from "react";
+import SearcResults from "../components/SearchResults";
 
 export default function Home() {
+  const [movies, setMovies] = useState([]);
+  const [query, setQuery] = useState("");
+
   return (
     <div>
-      <Navigation />
+      <Navigation
+        movies={movies}
+        setMovies={setMovies}
+        query={query}
+        setQuery={setQuery}
+      />
       <Toggle />
-      <RecommendationSection secTitle="Recommendations" />
-      <RecommendationSection secTitle="Continue Watching" />
-      <RecommendationSection secTitle="My Watch list" />
+      {query.length > 1 ? (
+        <SearcResults movies={movies} />
+      ) : (
+        <>
+          <RecommendationSection secTitle="Recommendations" movies={movies} query= 'interstellar' />
+          <RecommendationSection secTitle="Continue Watching" movies={movies} query= 'inception'/>
+          <RecommendationSection secTitle="My Watch list" movies={movies} query= 'batman'/>
+        </>
+      )}
     </div>
   );
 }
 
-function Navigation() {
+Navigation.propTypes = {
+  setMovies: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+  setQuery: PropTypes.func.isRequired,
+};
+
+const key = "cba680cd";
+
+function Navigation({ setMovies, query, setQuery }) {
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState("");
+
+  useEffect(
+    function () {
+      async function fetchMovies() {
+        try {
+          // setIsLoading(true);
+          // setError("");
+          const res =
+            await fetch(`http://www.omdbapi.com/?apikey=${key}&s=${query}
+        `);
+
+          if (!res.ok)
+            throw new Error("Something went wrong with fetching movies");
+
+          const data = await res.json();
+          if (data.Response === "False") throw new Error("Movie not found");
+
+          setMovies(data.Search);
+
+          // setIsLoading(false);
+        } catch (err) {
+          console.error(err.message);
+          // setError(err.message);
+        } finally {
+          // setIsLoading(false);
+        }
+      }
+
+      // if (query.length < 3) {
+      //   setMovies([]);
+      //   setError("");
+      //   return;
+      // }
+
+      fetchMovies();
+    },
+    [query, setMovies]
+  );
+
   return (
     <header className={styles.header}>
       <button
@@ -33,7 +97,7 @@ function Navigation() {
       </button>
       <nav className={styles.navigation}>
         <NavLink
-          to="/"
+          to="Home"
           className={({ isActive }) =>
             isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
           }
@@ -58,14 +122,12 @@ function Navigation() {
         </NavLink>
       </nav>
       <div className={styles.userControls}>
-        <div className={styles.userProfile}>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/cb8cfeaac51aea68de15b0a78683e025e39fe695466e5e0e1de64221555e78af?apiKey=bc155cd4463f4c48a216b01c1991193c&"
-            alt="User profile"
-            className={styles.profileIcon}
-          />
-        </div>
+        <input
+          type="text"
+          placeholder="Search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
         <img
           loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/8d9ccd3c0f798dd4b0085cb65b3daa5df09d6f3bf7d588fa1f52b1bb56ba1816?apiKey=bc155cd4463f4c48a216b01c1991193c&"
@@ -91,66 +153,66 @@ function Toggle() {
 }
 
 RecommendationSection.propTypes = {
-  secTitle: PropTypes.string,
-}
+  secTitle: PropTypes.string.isRequired,
+  query: PropTypes.string,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      imdbID: PropTypes.string.isRequired,
+      Poster: PropTypes.string.isRequired,
+      Title: PropTypes.string.isRequired,
+      Year: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
 
-function RecommendationSection({ secTitle }) {
-  const recommendations = [
-    {
-      imgSrc: queenOfTears,
-      title: "True Beauty",
-      genre: "Romance",
-      genreImg: netflixLogo,
+function RecommendationSection({ secTitle, query }) {
+  const [tempMovies, setTempMovies] = useState([]);
+  const [tempQuery, setTempQuery] = useState(query);
+
+  // setTempQuery(query)
+
+  useEffect(
+    function () {
+      async function fetchMovies() {
+        try {
+          // setIsLoading(true);
+          // setError("");
+          const res =
+            await fetch(`http://www.omdbapi.com/?apikey=${key}&s=${tempQuery}
+        `);
+
+          if (!res.ok)
+            throw new Error("Something went wrong with fetching movies");
+
+          const data = await res.json();
+          if (data.Response === "False") throw new Error("Movie not found");
+
+          setTempMovies(data.Search);
+
+          // setIsLoading(false);
+        } catch (err) {
+          console.error(err.message);
+          // setError(err.message);
+        } finally {
+          // setIsLoading(false);
+        }
+      }
+
+      // if (query.length < 3) {
+      //   setMovies([]);
+      //   setError("");
+      //   return;
+      // }
+
+      fetchMovies();
     },
-    {
-      imgSrc: queenOfTears,
-      title: "Palm Springs",
-      genre: "Romance",
-      genreImg: netflixLogo,
-    },
-    {
-      imgSrc: queenOfTears,
-      title: "Palm Springs",
-      genre: "Romance",
-      genreImg: netflixLogo,
-    },
-    {
-      imgSrc: queenOfTears,
-      title: "Palm Springs",
-      genre: "Romance",
-      genreImg: netflixLogo,
-    },
-    {
-      imgSrc: queenOfTears,
-      title: "Palm Springs",
-      genre: "Romance",
-      genreImg: netflixLogo,
-    },
-    {
-      imgSrc: queenOfTears,
-      title: "Palm Springs",
-      genre: "Romance",
-      genreImg: netflixLogo,
-    },
-    {
-      imgSrc: queenOfTears,
-      title: "Palm Springs",
-      genre: "Romance",
-      genreImg: netflixLogo,
-    },
-    {
-      imgSrc: queenOfTears,
-      title: "Palm Springs",
-      genre: "Romance",
-      genreImg: netflixLogo,
-    },
-    {
-      imgSrc: queenOfTears,
-      title: "Palm Springs",
-      genre: "Romance",
-      genreImg: netflixLogo,
-    },
-  ];
+    [tempQuery, setTempMovies]
+  );
+
+  useEffect(() => {
+    setTempQuery(query);
+  }, [query]);
+
 
   return (
     <>
@@ -162,13 +224,13 @@ function RecommendationSection({ secTitle }) {
           </Link>
         </header>
         <div className={styles.recommendationsGrid}>
-          {recommendations.map((rec, index) => (
+          {tempMovies.map((movie) => (
             <RecommendationCard
-              key={index}
-              imgSrc={rec.imgSrc}
-              title={rec.title}
-              genre={rec.genre}
-              genreImg={rec.genreImg}
+              key={movie.imdbID}
+              imgSrc={movie.Poster}
+              title={movie.Title}
+              genre={movie.Year}
+              genreImg={netflixLogo}
             />
           ))}
         </div>
@@ -182,7 +244,6 @@ RecommendationCard.propTypes = {
   title: PropTypes.string,
   genre: PropTypes.string,
   genreImg: PropTypes.string,
-  
 };
 
 function RecommendationCard({ imgSrc, title, genre, genreImg }) {

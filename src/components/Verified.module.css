@@ -1,0 +1,40 @@
+.verificationBackground {
+  background-color: #605468;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainSection {
+  background-color: var(--Media-Hub-colour-Background-background-500, #11001e);
+  display: flex;
+  max-width: 671px;
+  flex-direction: column;
+  white-space: nowrap;
+  justify-content: center;
+  padding: 80px 44px;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin-top: 81px;
+}
+
+.imageFallback {
+  aspect-ratio: 1.09;
+  object-fit: auto;
+  object-position: center;
+  width: 109px;
+  max-width: 100%;
+}
+
+.verifiedText {
+  color: #fff;
+  margin-top: 24px;
+  font: 700 28px/129% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
