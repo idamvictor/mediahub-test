@@ -2,11 +2,11 @@
 
 .header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   max-width: 1274px;
   padding: 0 20px;
-  justify-content: space-between;
-  align-items: center;
   gap: 20px;
 }
 
@@ -86,14 +86,14 @@
 }
 
 /*=============================================== TOGGLE COMPONENT ============================================*/
+
 .contentSection {
+  display: flex;
   justify-content: center;
   align-items: center;
   background-color: #41334b;
-  align-self: stretch;
-  display: flex;
-  margin-top: 21px;
   width: 100%;
+  margin-top: 21px;
   font-size: 12px;
   color: var(--Grey-neutral, #f9f9f9);
   font-weight: 500;
@@ -103,40 +103,38 @@
 }
 
 .navContainer {
-  border: 1px solid rgba(96, 84, 104, 1);
-  border-radius: 4px;
-
-  background-color: #11001e;
   display: flex;
   justify-content: space-between;
+  background-color: #11001e;
+  border: 1px solid rgba(96, 84, 104, 1);
+  border-radius: 4px;
 }
 
-.navItem {
+.navItem,
+.activeNavItem {
   font-family: Garute, sans-serif;
   margin: auto 0;
   padding: 8px 16px;
 }
 
 .activeNavItem {
-  font-family: Garute, sans-serif;
-  justify-content: center;
-  border-radius: 4px;
   background: linear-gradient(270deg, #e14eff 4.37%, #a85aff 100%);
-  padding: 8px 16px;
+  border-radius: 4px;
 }
 
 /*===================================================== RECOMMENDATION SECTION ==================================*/
+
 .recommendationsContainer {
-  border: 1px solid rgba(65, 51, 75, 1);
   display: flex;
   flex-direction: column;
-  margin-top: 32px;
   width: 100%;
   max-width: 1200px;
+  margin-top: 32px;
   padding: 32px;
+  border: 1px solid rgba(65, 51, 75, 1);
 }
 
-.header {
+.recommendationsContainer .header {
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -154,10 +152,26 @@
 }
 
 .recommendationsGrid {
-  margin-top: 24px;
   display: flex;
   gap: 20px;
-  overflow-x: scroll;
+  margin-top: 24px;
+  overflow-x: auto;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: thin;  /* Firefox */
+  scrollbar-color: #1e1e1e #000; /* scrollbar thumb and track color for Firefox */
+}
+
+.recommendationsGrid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.recommendationsGrid::-webkit-scrollbar-thumb {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+}
+
+.recommendationsGrid::-webkit-scrollbar-track {
+  background: #000;
 }
 
 /*===================================================== RECOMMENDATION CARD ======================================*/
@@ -165,14 +179,15 @@
 .recommendationCard {
   display: flex;
   flex-direction: column;
-  line-height: normal;
   width: 25%;
   border: 1px solid rgba(65, 51, 75, 1);
+  line-height: normal;
+  cursor: pointer;
 }
 
 .recommendationImage {
-  aspect-ratio: 1;
   width: 100%;
+  aspect-ratio: 1;
   box-shadow: 3px 8px 16px 0px rgba(176, 88, 255, 0.05);
 }
 
@@ -187,15 +202,15 @@
   color: var(--Media-Hub-colour-Text-text--50, #fffeff);
   font-weight: 600;
   font-size: 20px;
-  line-height: 120%;
   font-family: Inter, sans-serif;
+  line-height: 120%;
 }
 
 .genreContainer {
   display: flex;
   justify-content: space-between;
-  margin-top: 4px;
   gap: 20px;
+  margin-top: 4px;
   font-size: 14px;
   color: var(--Media-Hub-colour-Text-text--700, #b5aeb5);
   font-weight: 400;
@@ -207,7 +222,20 @@
 }
 
 .genreImage {
-  aspect-ratio: 3.03;
   width: 51px;
-  margin: auto 0;
+  aspect-ratio: 3.03;
 }
+
+.message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
