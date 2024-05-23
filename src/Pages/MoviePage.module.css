@@ -1,0 +1,259 @@
+.container {
+  background-color: var(--Media-Hub-colour-Background-background-500, #11001e);
+  display: flex;
+  flex-direction: column;
+  padding: 33px 0 62px;
+}
+
+.logo {
+  aspect-ratio: 1;
+  object-fit: auto;
+  object-position: center;
+  width: 29px;
+  fill: var(--Media-Hub-colour-Text-text--50, #fffeff);
+  align-self: end;
+  margin-right: 27px;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  padding: 0 27px 0 68px;
+  width: 100%;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  min-height: 568px;
+  width: 907px;
+  max-width: 100%;
+  align-items: flex-end;
+  padding: 80px 60px 33px;
+}
+
+.backgroundImage {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.foregroundImage {
+  aspect-ratio: 3.03;
+  object-fit: auto;
+  object-position: center;
+  width: 194px;
+  margin-top: 391px;
+  max-width: 100%;
+}
+
+.movieTitle {
+  color: var(--Media-Hub-colour-Text-text--50, #fffeff);
+  margin-top: 35px;
+  font: 700 36px/122% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.movieGenre {
+  color: var(--Media-Hub-colour-Background-background-300, #605468);
+  margin-top: 11px;
+  font: 400 20px/140% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.movieDescription {
+  color: var(--Media-Hub-colour-Text-text--50, #fffeff);
+  margin-top: 11px;
+  font: 500 18px/28px Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.actions {
+  align-self: start;
+  display: flex;
+  margin-top: 28px;
+  gap: 20px;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 133%;
+  justify-content: space-between;
+}
+
+.watchNowButton,
+.addToWatchlistButton {
+  font-family: Inter, sans-serif;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 16px 32px;
+}
+
+.watchNowButton {
+  background-color: var(
+    --Button-gradient,
+    linear-gradient(262deg, #c83cd4 -12.99%, #6736a6 98.21%)
+  );
+  color: var(--Media-Hub-colour-Text-text--500, #fff5ff);
+}
+
+.addToWatchlistButton {
+  border: 1px solid rgba(96, 84, 104, 1);
+  color: var(--Media-Hub-colour-Text-text--50, #fffeff);
+}
+
+.watchSection {
+  display: flex;
+  justify-content: center;
+  align-self: start;
+  margin-top: 34px;
+  gap: 20px;
+}
+
+.sectionImage {
+  aspect-ratio: 1.79;
+  object-fit: auto;
+  object-position: center;
+  width: 162px;
+  max-width: 100%;
+}
+
+.sectionDetails {
+  display: flex;
+  flex-direction: column;
+  margin: auto 0;
+}
+
+.title {
+  color: #fff;
+  font: 700 20px/140% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.genre {
+  color: var(--Media-Hub-colour-Text-text--700, #b5aeb5);
+  margin-top: 12px;
+  font: 500 18px/156% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+/* ====================================================================================== */
+
+/* MoviePage.module.css */
+
+.container {
+  padding: 20px;
+}
+
+.logo {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.mainContent {
+  padding: 20px;
+}
+
+.hero {
+  position: relative;
+}
+
+.backgroundImage {
+  width: 100%;
+  height: auto;
+}
+
+.movieTitle {
+  font-size: 2rem;
+  margin: 20px 0;
+}
+
+.movieGenre,
+.movieDescription {
+  margin: 10px 0;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.watchNowButton,
+.addToWatchlistButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.relatedMoviesContainer {
+  margin-top: 40px;
+}
+
+.relatedMoviesTitle {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: white;
+  font: 500 18px/156% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.relatedMoviesGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.relatedMovieCard {
+  flex: 1 1 calc(20% - 10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.relatedMoviePoster {
+  width: 100%;
+  height: auto;
+}
+
+.relatedMovieTitle {
+  font-size: 1rem;
+  margin-top: 10px;
+  color: white;
+  font: 500 18px/156% Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.watchSection {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.sectionImage {
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.sectionDetails {
+  flex: 1;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.genre {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  margin-right: 1rem;
+}

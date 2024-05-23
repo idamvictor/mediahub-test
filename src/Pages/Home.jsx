@@ -1,32 +1,118 @@
-import { NavLink, Link } from "react-router-dom";
-import PropTypes from "prop-types";
+import { useRef, useEffect, useState } from "react";
+import PropTypes from 'prop-types';
+import { Link, NavLink } from "react-router-dom";
 import styles from "./Home.module.css";
-import netflixLogo from "../assets/netflixLogo.png";
-import { useEffect, useState } from "react";
-import SearcResults from "../components/SearchResults";
+import SearchResults from "../components/SearchResults";
+import MovieDetails from "../components/MovieDetails";
+import EmptyModal from "../components/EmptyModal";
 
-export default function Home() {
+const key = "cba680cd";
+
+Home.propTypes = {
+  onMovieSelect: PropTypes.func.isRequired,
+};
+
+function Home({ onMovieSelect }) {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const searchInputRef = useRef(null); // Create a ref for the search input
+  const [watchlist, setWatchlist] = useState(() => {
+    // Retrieve watchlist from localStorage
+    const savedWatchlist = localStorage.getItem("watchlist");
+    return savedWatchlist ? JSON.parse(savedWatchlist) : [];
+  });
+  const [message, setMessage] = useState(""); // State for message
+
+  useEffect(() => {
+    // Store watchlist in localStorage whenever it changes
+    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  }, [watchlist]);
+
+  const handleMovieClick = async (imdbID) => {
+    try {
+      const res = await fetch(
+        `http://www.omdbapi.com/?apikey=${key}&i=${imdbID}&plot=full`
+      );
+      if (!res.ok)
+        throw new Error("Something went wrong with fetching movie details");
+
+      const movie = await res.json();
+      setSelectedMovie(movie);
+      onMovieSelect(imdbID); // Pass the selected movie ID to the App component
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedMovie(null);
+  };
+
+  const focusSearchBar = () => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  };
+
+  const clearSearch = () => {
+    setQuery("");
+    setMovies([]);
+  };
+
+  const addToWatchlist = (movie) => {
+    if (!watchlist.some((item) => item.imdbID === movie.imdbID)) {
+      setWatchlist([...watchlist, movie]);
+      setMessage(`${movie.Title} has been added to your watchlist`); // Set message
+      setTimeout(() => {
+        setMessage(""); // Clear message after a delay
+      }, 3000); // Adjust the delay as needed
+    } else {
+      setMessage(`${movie.Title} is already in your watchlist`); // Set message
+      setTimeout(() => {
+        setMessage(""); // Clear message after a delay
+      }, 3000); // Adjust the delay as needed
+    }
+  };
+
+  const removeFromWatchlist = (imdbID) => {
+    setWatchlist(watchlist.filter((movie) => movie.imdbID !== imdbID));
+  };
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
       <Navigation
         movies={movies}
         setMovies={setMovies}
         query={query}
         setQuery={setQuery}
+        searchInputRef={searchInputRef} // Pass the ref to Navigation
       />
       <Toggle />
       {query.length > 1 ? (
-        <SearcResults movies={movies} />
+        <SearchResults
+          movies={movies}
+          onMovieClick={handleMovieClick}
+          addToWatchlist={addToWatchlist}
+          clearSearch={clearSearch} // Pass the clearSearch function to SearchResults
+        />
       ) : (
         <>
-          <RecommendationSection secTitle="Recommendations" movies={movies} query= 'interstellar' />
-          <RecommendationSection secTitle="Continue Watching" movies={movies} query= 'inception'/>
-          <RecommendationSection secTitle="My Watch list" movies={movies} query= 'batman'/>
+          {watchlist.length === 0 && (
+            <EmptyModal focusSearchBar={focusSearchBar} />
+          )}
+          {watchlist.length > 0 && (
+            <Watchlist
+              movies={watchlist}
+              removeFromWatchlist={removeFromWatchlist}
+            />
+          )}
         </>
       )}
+      {selectedMovie && (
+        <MovieDetails movie={selectedMovie} onClose={handleCloseDetails} />
+      )}
+      {message && <div className={styles.message}>{message}</div>}
     </div>
   );
 }
@@ -35,24 +121,19 @@ Navigation.propTypes = {
   setMovies: PropTypes.func.isRequired,
   query: PropTypes.string.isRequired,
   setQuery: PropTypes.func.isRequired,
+  searchInputRef: PropTypes.object.isRequired,
 };
 
-const key = "cba680cd";
+export default Home;
 
-function Navigation({ setMovies, query, setQuery }) {
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState("");
-
+function Navigation({ setMovies, query, setQuery, searchInputRef }) {
   useEffect(
     function () {
       async function fetchMovies() {
         try {
-          // setIsLoading(true);
-          // setError("");
-          const res =
-            await fetch(`http://www.omdbapi.com/?apikey=${key}&s=${query}
-        `);
-
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${key}&s=${query}`
+          );
           if (!res.ok)
             throw new Error("Something went wrong with fetching movies");
 
@@ -60,21 +141,15 @@ function Navigation({ setMovies, query, setQuery }) {
           if (data.Response === "False") throw new Error("Movie not found");
 
           setMovies(data.Search);
-
-          // setIsLoading(false);
         } catch (err) {
           console.error(err.message);
-          // setError(err.message);
-        } finally {
-          // setIsLoading(false);
         }
       }
 
-      // if (query.length < 3) {
-      //   setMovies([]);
-      //   setError("");
-      //   return;
-      // }
+      if (query.length < 3) {
+        setMovies([]);
+        return;
+      }
 
       fetchMovies();
     },
@@ -98,9 +173,7 @@ function Navigation({ setMovies, query, setQuery }) {
       <nav className={styles.navigation}>
         <NavLink
           to="Home"
-          className={({ isActive }) =>
-            isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
-          }
+          className={styles.active}
         >
           Home
         </NavLink>
@@ -123,10 +196,12 @@ function Navigation({ setMovies, query, setQuery }) {
       </nav>
       <div className={styles.userControls}>
         <input
+          className={styles.input}
           type="text"
           placeholder="Search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          ref={searchInputRef} // Attach the ref to the input element
         />
         <img
           loading="lazy"
@@ -139,22 +214,53 @@ function Navigation({ setMovies, query, setQuery }) {
   );
 }
 
+Navigation.propTypes = {
+  setMovies: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+  setQuery: PropTypes.func.isRequired,
+  searchInputRef: PropTypes.object.isRequired,
+};
+
 function Toggle() {
   return (
-    <>
-      <section className={styles.contentSection}>
-        <nav className={styles.navContainer}>
+    <section className={styles.contentSection}>
+      <nav className={styles.navContainer}>
+        <Link to="/MusicHome" className={styles.toggleContainer}>
           <div className={styles.navItem}>Music</div>
-          <div className={styles.activeNavItem}>Movies</div>
-        </nav>
-      </section>
-    </>
+        </Link>
+        <div className={styles.activeNavItem}>Movies</div>
+      </nav>
+    </section>
   );
 }
 
-RecommendationSection.propTypes = {
-  secTitle: PropTypes.string.isRequired,
-  query: PropTypes.string,
+function Watchlist({ movies, removeFromWatchlist }) {
+  return (
+    <section className={styles.watchlist}>
+      <h2 className={styles.watchlistTitle}>Your Watchlist</h2>
+      <ul className={styles.cardContainer}>
+        {movies.map((movie) => (
+          <li className={styles.card} key={movie.imdbID}>
+            <img
+              className={styles.cardImage}
+              src={movie.Poster}
+              alt={`${movie.Title} Poster`}
+            />
+            <div className={styles.cardTitle}>{movie.Title}</div>
+            <button
+              className={styles.plusButton}
+              onClick={() => removeFromWatchlist(movie.imdbID)}
+            >
+              -
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+Watchlist.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
       imdbID: PropTypes.string.isRequired,
@@ -163,100 +269,5 @@ RecommendationSection.propTypes = {
       Year: PropTypes.string.isRequired,
     })
   ).isRequired,
+  removeFromWatchlist: PropTypes.func.isRequired,
 };
-
-function RecommendationSection({ secTitle, query }) {
-  const [tempMovies, setTempMovies] = useState([]);
-  const [tempQuery, setTempQuery] = useState(query);
-
-  // setTempQuery(query)
-
-  useEffect(
-    function () {
-      async function fetchMovies() {
-        try {
-          // setIsLoading(true);
-          // setError("");
-          const res =
-            await fetch(`http://www.omdbapi.com/?apikey=${key}&s=${tempQuery}
-        `);
-
-          if (!res.ok)
-            throw new Error("Something went wrong with fetching movies");
-
-          const data = await res.json();
-          if (data.Response === "False") throw new Error("Movie not found");
-
-          setTempMovies(data.Search);
-
-          // setIsLoading(false);
-        } catch (err) {
-          console.error(err.message);
-          // setError(err.message);
-        } finally {
-          // setIsLoading(false);
-        }
-      }
-
-      // if (query.length < 3) {
-      //   setMovies([]);
-      //   setError("");
-      //   return;
-      // }
-
-      fetchMovies();
-    },
-    [tempQuery, setTempMovies]
-  );
-
-  useEffect(() => {
-    setTempQuery(query);
-  }, [query]);
-
-
-  return (
-    <>
-      <section className={styles.recommendationsContainer}>
-        <header className={styles.header}>
-          <h2 className={styles.headerTitle}>{secTitle}</h2>
-          <Link to="" className={styles.seeAllLink} tabIndex="0">
-            See all
-          </Link>
-        </header>
-        <div className={styles.recommendationsGrid}>
-          {tempMovies.map((movie) => (
-            <RecommendationCard
-              key={movie.imdbID}
-              imgSrc={movie.Poster}
-              title={movie.Title}
-              genre={movie.Year}
-              genreImg={netflixLogo}
-            />
-          ))}
-        </div>
-      </section>
-    </>
-  );
-}
-
-RecommendationCard.propTypes = {
-  imgSrc: PropTypes.string,
-  title: PropTypes.string,
-  genre: PropTypes.string,
-  genreImg: PropTypes.string,
-};
-
-function RecommendationCard({ imgSrc, title, genre, genreImg }) {
-  return (
-    <article className={styles.recommendationCard}>
-      <img loading="lazy" src={imgSrc} className={styles.recommendationImage} />
-      <section className={styles.recommendationContent}>
-        <h3 className={styles.recommendationTitle}>{title}</h3>
-        <div className={styles.genreContainer}>
-          <span className={styles.genreLabel}>{genre}</span>
-          <img loading="lazy" src={genreImg} className={styles.genreImage} />
-        </div>
-      </section>
-    </article>
-  );
-}

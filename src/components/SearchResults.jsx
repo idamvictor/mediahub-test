@@ -1,22 +1,89 @@
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import styles from "./SearchResults.module.css";
+
+function ImageCard({
+  imageSrc,
+  title,
+  altText,
+  onClick,
+  addToWatchlist,
+  movie,
+}) {
+  return (
+    <div className={styles.card}>
+      <img
+        src={imageSrc}
+        alt={altText}
+        className={styles.cardImage}
+        onClick={onClick}
+      />
+      <div className={styles.cardTitle}>{title}</div>
+      <button
+        onClick={() => addToWatchlist(movie)}
+        className={styles.plusButton}
+      >
+        +
+      </button>
+    </div>
+  );
+}
 
 ImageCard.propTypes = {
   imageSrc: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   altText: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  addToWatchlist: PropTypes.func.isRequired,
+  movie: PropTypes.object.isRequired,
 };
 
-function ImageCard({ imageSrc, title, altText }) {
+export default function SearchResults({
+  movies,
+  onMovieClick,
+  addToWatchlist,
+  clearSearch,
+}) {
+  const navigate = useNavigate();
+
+  const handleClick = (imdbID) => {
+    onMovieClick(imdbID);
+    navigate(`/MoviePage`);
+  };
+
+  const handleClose = () => {
+    clearSearch();
+    navigate(-1);
+  };
+
   return (
-    <div className={styles.card}>
-      <img src={imageSrc} alt={altText} className={styles.cardImage} />
-      <div className={styles.cardTitle}>{title}</div>
+    <div className={styles.searchResultContainer}>
+      <header className={styles.header}>
+        <h2 className={styles.resultsTitle}>Results</h2>
+        <button onClick={handleClose} className={styles.closeButton}>
+          X
+        </button>
+      </header>
+      <main>
+        <section className={styles.imageGallery}>
+          {movies.map((movie) => (
+            <ImageCard
+              key={movie.imdbID}
+              imageSrc={movie.Poster}
+              title={movie.Title}
+              altText={`${movie.Title} Poster`}
+              onClick={() => handleClick(movie.imdbID)}
+              addToWatchlist={addToWatchlist}
+              movie={movie}
+            />
+          ))}
+        </section>
+      </main>
     </div>
   );
 }
 
-SearcResults.propTypes = {
+SearchResults.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
       imdbID: PropTypes.string.isRequired,
@@ -25,44 +92,7 @@ SearcResults.propTypes = {
       Year: PropTypes.string.isRequired,
     })
   ).isRequired,
+  onMovieClick: PropTypes.func.isRequired,
+  addToWatchlist: PropTypes.func.isRequired,
+  clearSearch: PropTypes.func.isRequired,
 };
-
-export default function SearcResults({ movies }) {
-  console.log(movies);
-
-  return (
-    <>
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          {/* <div className={styles.logoContainer}>
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/2e7e61e94618bbebfb5190e2d1f23acc407d71b668c795ed779f0486dc86b4da?apiKey=df44ca8e15de4475b0d7b182ebb1db7c&"
-              alt="Logo"
-              className={styles.logoImage}
-            />
-          </div>
-          <h1 className={styles.pageTitle}>Search</h1> */}
-        </div>
-        <h2 className={styles.resultsTitle}>Results</h2>
-      </header>
-      <main>
-        <section className={styles.imageGallery}>
-          {movies.map((image) => (
-            <ImageCard
-              key={image.imdbID}
-              imageSrc={image.Poster}
-              title={image.Title}
-              altText={image.alt}
-            />
-          ))}
-        </section>
-      </main>
-    </>
-  );
-}
-
-// Poster: "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg";
-// Title: "Interstellar";
-// Type: "movie";
-// Year: "2014";
-// imdbID: "tt0816692";

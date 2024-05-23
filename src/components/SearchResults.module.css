@@ -1,9 +1,13 @@
-/* MyComponent.module.css */
+.searchResultContainer{
+  max-width: 1200px;
+  margin: 0 auto;
+}
 .header {
   background-color: var(--Media-Hub-colour-Background-background-500, #11001e);
   display: flex;
-  flex-direction: column;
-  padding: 40px 80px;
+  padding: 40px 0px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .headerContent {
@@ -38,7 +42,6 @@
 
 .resultsTitle {
   color: #fff;
-  margin-top: 50px;
   font: 500 24px/67% Inter, sans-serif;
 }
 
@@ -61,6 +64,7 @@
   background-color: var(--Media-Hub-colour-Background-background-500, #11001e);
   padding-bottom: 19px;
   overflow: hidden;
+  position: relative;
 }
 
 .cardImage {
@@ -75,4 +79,42 @@
   color: var(--Media-Hub-colour-Text-text--50, #fffeff);
   white-space: nowrap;
   margin: 16px 0 0 16px;
+}
+
+/* SearchResults.module.css */
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+
+/* ======================================= Plus Button =================================================== */
+.plusButton {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(270deg, #e14eff 4.37%, #a85aff 100%);
+  color: white; /* White text */
+  font-size: 20px; /* Larger font size */
+  text-align: center; /* Center the text */
+  border-radius: 50%; /* Circular shape */
+  border: none; /* Remove default border */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  padding-top: -5px;
+  
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.plusButton:hover {
+  background: linear-gradient(270deg, #ba37d4 4.37%, #a85aff 100%);
+}
+
+.plusButton:active {
+  background: linear-gradient(270deg, #ba37d4 4.37%, #a85aff 100%);
 }
