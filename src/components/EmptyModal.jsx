@@ -12,8 +12,7 @@ function EmptyModal({ focusSearchBar }) {
       />
       <h2 className={styles.heading}>There’s nothing to see here</h2>
       <p className={styles.description}>
-        You have no Linked connections. Not to worry, You can add Movies
-        manually!
+        You have no Linked connections. Not to worry, You can add manually!
       </p>
       <button className={styles.button} onClick={focusSearchBar}>
         Add Manually

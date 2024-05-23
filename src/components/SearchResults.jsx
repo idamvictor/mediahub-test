@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import styles from "./SearchResults.module.css";
-import { FaRegBookmark } from "react-icons/fa";
 
 function ImageCard({
   imageSrc,
@@ -20,8 +19,12 @@ function ImageCard({
         onClick={onClick}
       />
       <div className={styles.cardTitle}>{title}</div>
-      <FaRegBookmark onClick={() => addToWatchlist(movie)}
-        className={styles.watchlistButton} />
+      <button
+        onClick={() => addToWatchlist(movie)}
+        className={styles.plusButton}
+      >
+        +
+      </button>
     </div>
   );
 }
@@ -54,12 +57,12 @@ export default function SearchResults({
   };
 
   return (
-    <>
+    <div className={styles.searchResultContainer}>
       <header className={styles.header}>
+        <h2 className={styles.resultsTitle}>Results</h2>
         <button onClick={handleClose} className={styles.closeButton}>
           X
         </button>
-        <h2 className={styles.resultsTitle}>Results</h2>
       </header>
       <main>
         <section className={styles.imageGallery}>
@@ -76,7 +79,7 @@ export default function SearchResults({
           ))}
         </section>
       </main>
-    </>
+    </div>
   );
 }
 

@@ -15,23 +15,11 @@
   margin-right: 27px;
 }
 
-@media (max-width: 991px) {
-  .logo {
-    margin-right: 10px;
-  }
-}
-
 .mainContent {
   display: flex;
   flex-direction: column;
   padding: 0 27px 0 68px;
   width: 100%;
-}
-
-@media (max-width: 991px) {
-  .mainContent {
-    padding: 0 20px;
-  }
 }
 
 .hero {
@@ -44,12 +32,6 @@
   max-width: 100%;
   align-items: flex-end;
   padding: 80px 60px 33px;
-}
-
-@media (max-width: 991px) {
-  .hero {
-    padding: 0 20px;
-  }
 }
 
 .backgroundImage {
@@ -70,22 +52,10 @@
   max-width: 100%;
 }
 
-@media (max-width: 991px) {
-  .foregroundImage {
-    margin-top: 40px;
-  }
-}
-
 .movieTitle {
   color: var(--Media-Hub-colour-Text-text--50, #fffeff);
   margin-top: 35px;
   font: 700 36px/122% Inter, -apple-system, Roboto, Helvetica, sans-serif;
-}
-
-@media (max-width: 991px) {
-  .movieTitle {
-    max-width: 100%;
-  }
 }
 
 .movieGenre {
@@ -94,22 +64,10 @@
   font: 400 20px/140% Inter, -apple-system, Roboto, Helvetica, sans-serif;
 }
 
-@media (max-width: 991px) {
-  .movieGenre {
-    max-width: 100%;
-  }
-}
-
 .movieDescription {
   color: var(--Media-Hub-colour-Text-text--50, #fffeff);
   margin-top: 11px;
   font: 500 18px/28px Inter, -apple-system, Roboto, Helvetica, sans-serif;
-}
-
-@media (max-width: 991px) {
-  .movieDescription {
-    max-width: 100%;
-  }
 }
 
 .actions {
@@ -133,7 +91,10 @@
 }
 
 .watchNowButton {
-  background-color: var(--Button-gradient, linear-gradient(262deg, #c83cd4 -12.99%, #6736a6 98.21%));
+  background-color: var(
+    --Button-gradient,
+    linear-gradient(262deg, #c83cd4 -12.99%, #6736a6 98.21%)
+  );
   color: var(--Media-Hub-colour-Text-text--500, #fff5ff);
 }
 
@@ -205,10 +166,10 @@
 .movieTitle {
   font-size: 2rem;
   margin: 20px 0;
-  
 }
 
-.movieGenre, .movieDescription {
+.movieGenre,
+.movieDescription {
   margin: 10px 0;
 }
 
@@ -218,7 +179,8 @@
   margin: 20px 0;
 }
 
-.watchNowButton, .addToWatchlistButton {
+.watchNowButton,
+.addToWatchlistButton {
   padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
@@ -261,19 +223,6 @@
   font: 500 18px/156% Inter, -apple-system, Roboto, Helvetica, sans-serif;
 }
 
-/* Adjustments for smaller screens */
-@media (max-width: 768px) {
-  .relatedMovieCard {
-    flex: 1 1 calc(50% - 10px);
-  }
-}
-
-@media (max-width: 480px) {
-  .relatedMovieCard {
-    flex: 1 1 calc(100% - 10px);
-  }
-}
-
 .watchSection {
   display: flex;
   align-items: center;
@@ -293,10 +242,18 @@
 .title {
   font-size: 1rem;
   font-weight: bold;
-  
 }
 
 .genre {
   font-size: 0.9rem;
   color: #666;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  margin-right: 1rem;
 }

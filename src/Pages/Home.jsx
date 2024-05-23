@@ -1,12 +1,16 @@
 import { useRef, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import { Link, NavLink } from "react-router-dom";
 import styles from "./Home.module.css";
 import SearchResults from "../components/SearchResults";
 import MovieDetails from "../components/MovieDetails";
 import EmptyModal from "../components/EmptyModal";
 
 const key = "cba680cd";
+
+Home.propTypes = {
+  onMovieSelect: PropTypes.func.isRequired,
+};
 
 function Home({ onMovieSelect }) {
   const [movies, setMovies] = useState([]);
@@ -76,7 +80,7 @@ function Home({ onMovieSelect }) {
   };
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
       <Navigation
         movies={movies}
         setMovies={setMovies}
@@ -169,9 +173,7 @@ function Navigation({ setMovies, query, setQuery, searchInputRef }) {
       <nav className={styles.navigation}>
         <NavLink
           to="Home"
-          className={({ isActive }) =>
-            isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
-          }
+          className={styles.active}
         >
           Home
         </NavLink>
@@ -194,6 +196,7 @@ function Navigation({ setMovies, query, setQuery, searchInputRef }) {
       </nav>
       <div className={styles.userControls}>
         <input
+          className={styles.input}
           type="text"
           placeholder="Search"
           value={query}
@@ -222,7 +225,9 @@ function Toggle() {
   return (
     <section className={styles.contentSection}>
       <nav className={styles.navContainer}>
-        <div className={styles.navItem}>Music</div>
+        <Link to="/MusicHome" className={styles.toggleContainer}>
+          <div className={styles.navItem}>Music</div>
+        </Link>
         <div className={styles.activeNavItem}>Movies</div>
       </nav>
     </section>
@@ -232,14 +237,21 @@ function Toggle() {
 function Watchlist({ movies, removeFromWatchlist }) {
   return (
     <section className={styles.watchlist}>
-      <h2>Your Watchlist</h2>
-      <ul>
+      <h2 className={styles.watchlistTitle}>Your Watchlist</h2>
+      <ul className={styles.cardContainer}>
         {movies.map((movie) => (
-          <li key={movie.imdbID}>
-            <img src={movie.Poster} alt={`${movie.Title} Poster`} />
-            <div>{movie.Title}</div>
-            <button onClick={() => removeFromWatchlist(movie.imdbID)}>
-              Remove
+          <li className={styles.card} key={movie.imdbID}>
+            <img
+              className={styles.cardImage}
+              src={movie.Poster}
+              alt={`${movie.Title} Poster`}
+            />
+            <div className={styles.cardTitle}>{movie.Title}</div>
+            <button
+              className={styles.plusButton}
+              onClick={() => removeFromWatchlist(movie.imdbID)}
+            >
+              -
             </button>
           </li>
         ))}
@@ -259,5 +271,3 @@ Watchlist.propTypes = {
   ).isRequired,
   removeFromWatchlist: PropTypes.func.isRequired,
 };
-
-

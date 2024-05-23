@@ -168,12 +168,7 @@ function MoviePage({ selectedMovieId, addToWatchlist }) {
   return (
     <>
       <section className={styles.container}>
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/bd4c66db982b1b259a256b918ecdb3e6795b3a33464849a0d1a989906de59e06?apiKey=df44ca8e15de4475b0d7b182ebb1db7c&"
-          className={styles.logo}
-          alt="Movie logo"
-        />
+        <button className={styles.closeButton}> x </button>
         <div className={styles.mainContent}>
           <div className={styles.hero}>
             <img
@@ -186,10 +181,10 @@ function MoviePage({ selectedMovieId, addToWatchlist }) {
           <h1 className={styles.movieTitle}>{movie.Title}</h1>
           <p className={styles.movieGenre}>{movie.Genre}</p>
           <p className={styles.movieDescription}>{movie.Plot}</p>
-          <div className={styles.actions}>
+          {/* <div className={styles.actions}>
             <button className={styles.watchNowButton}>Watch Now</button>
             <button className={styles.addToWatchlistButton} onClick={() => addToWatchlist(movie)}>Add to Watchlist</button>
-          </div>
+          </div> */}
         </div>
       </section>
 
